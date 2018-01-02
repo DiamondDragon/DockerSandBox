@@ -3,12 +3,16 @@ version: '3'
 # This file contains security-critical overrides which must be specified per environment
 services:
   db:
+    # More details https://docs.docker.com/compose/compose-file/#restart
+    # restart: on-failure
     environment:
       - SA_PASSWORD=TestApp123456
 
   sonarqube:
+    # restart: on-failure
     environment:
       - SONARQUBE_JDBC_USERNAME=sa
       - SONARQUBE_JDBC_PASSWORD=TestApp123456
+
       
   
