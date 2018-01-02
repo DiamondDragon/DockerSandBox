@@ -1,0 +1,14 @@
+version: '3'
+
+# This file contains security-critical overrides which must be specified per environment
+services:
+  db:
+    environment:
+      - SA_PASSWORD=TestApp123456
+
+  sonarqube:
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sa
+      - SONARQUBE_JDBC_PASSWORD=TestApp123456
+      
+  

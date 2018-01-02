@@ -1,0 +1,42 @@
+version: '3'
+
+volumes:
+  mssql-server-linux-data:
+  # SonarQube volues
+  # Example was found here: https://github.com/SonarSource/docker-sonarqube/blob/master/recipes.md
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:  
+
+services:
+  db:
+    # More details can be found here https://hub.docker.com/r/microsoft/mssql-server-linux/
+    # MS SQL Server production configuration https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-docker
+    image: microsoft/mssql-server-linux:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+    volumes:
+      - mssql-server-linux-data:/var/opt/mssql
+    ports:
+      - "1477:1433"
+
+  sonarqube:
+    # More details can be found here: https://hub.docker.com/_/sonarqube/
+    image: sonarqube:latest
+    environment:
+      # Connection string details https://docs.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url
+      - SONARQUBE_JDBC_URL=jdbc:sqlserver://db:1433;databaseName=SonarQubeDb;    
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins    
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    depends_on:
+      - db
+
+  
