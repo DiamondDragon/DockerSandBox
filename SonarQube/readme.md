@@ -24,3 +24,17 @@ these changes required to discover pluging which are going to be created later.
 1. Once SonarQube is restarted new pluging is going to be available among installed plugins.
 
 **NOTE:** The following [ticket](https://jira.sonarsource.com/browse/SFSRAP-45) contains workaround for plugins which require Roslyn 1.2 (at the moment Roslyn 1.0 and 1.1 are supported by SDK).
+
+# Sonar Scaner for MSBuild
+
+1. Get latest version of scanner [here](https://github.com/SonarSource/sonar-scanner-msbuild/releases)
+1. Installation instructions can be found [here](https://docs.sonarqube.org/display/SCAN/Scanning+on+Windows)
+
+
+Example of analysis execution commands:
+
+```
+SonarQube.Scanner.MSBuild.exe begin /k:"Intelliflo.PFP" /v:"1.0" /d:sonar.host.url="http://192.168.8.119:9000" /d:sonar.login="eb71436c5a7bef8a4237c827ac1f9d2a159f42e2"
+"c:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe" Intelliflo.PersonalFinancePortal.sln /t:Rebuild
+SonarQube.Scanner.MSBuild.exe end /d:sonar.login="eb71436c5a7bef8a4237c827ac1f9d2a159f42e2"
+```
