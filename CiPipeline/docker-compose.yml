@@ -26,6 +26,8 @@ services:
     volumes:
       - tc_server_data:C:/ProgramData/JetBrains/TeamCity
       - tc_server_logs:C:/TeamCity/logs
+    environment:
+      - TEAMCITY_SERVER_MEM_OPTS=-Xmx2g -XX:MaxPermSize=270m -XX:ReservedCodeCacheSize=350m
     ports:
       - "8111:8111"
     depends_on:
