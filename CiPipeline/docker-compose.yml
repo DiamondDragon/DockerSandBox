@@ -1,0 +1,52 @@
+version: '3'
+
+volumes:
+  db_data:
+  tc_agent_config:
+  tc_server_data:
+  tc_server_logs:
+
+services:
+  db:
+    # More details can be found here https://hub.docker.com/r/microsoft/mssql-server-windows-express/
+    # MS SQL Server production configuration https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-configure-docker
+    image: microsoft/mssql-server-windows-express:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - sa_password=P@ss123
+    volumes:
+      - db_data:C:/temp
+    ports:
+      - "1477:1433"
+
+  tc_server:
+    # Windows image was selected as soon to avoid linux and windows docker files
+    # https://hub.docker.com/r/jetbrains/teamcity-server/
+    image: jetbrains/teamcity-server:latest-windowsservercore
+    volumes:
+      - tc_server_data:C:/ProgramData/JetBrains/TeamCity
+      - tc_server_logs:C:/TeamCity/logs
+    ports:
+      - "8111:8111"
+    depends_on:
+      - db
+
+  tc_agent:
+    # Windows image is expected to contain the following important components
+    # - .NET Framework 4.7.1 (or latest version)
+    # - dotNet core 2.1+ (or latest version)
+    # - NuGet
+    # - MsBuild 15
+    # The following links contains references to proper images:
+    # https://github.com/JetBrains/teamcity-docker-minimal-agent/blob/master/windowsservercore/Dockerfile
+    # https://github.com/JetBrains/teamcity-docker-agent/blob/master/windowsservercore/Dockerfile
+    # https://github.com/Microsoft/dotnet-framework-docker/blob/master/4.7.1-windowsservercore-1709/build/Dockerfile
+    image: jetbrains/teamcity-agent:latest-windowsservercore
+    environment:
+      - SERVER_URL=http://tc_server
+    volumes:
+      - tc_agent_config:C:/BuildAgent/conf
+    depends_on:
+      - tc_server
+
+  
