@@ -8,6 +8,8 @@ volumes:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_bundled-plugins:  
+  teamcity_data:
+  teamcity_logs:
 
 services:
   db:
@@ -20,7 +22,7 @@ services:
     volumes:
       - mssql-server-linux-data:/var/opt/mssql
     ports:
-      - "1477:1433"
+      - 1477:1433
 
   sonarqube:
     # More details can be found here: https://hub.docker.com/_/sonarqube/
@@ -31,13 +33,24 @@ services:
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
-      #- sonarqube_extensions:/opt/sonarqube/extensions
-      - /home/administrator/docker-stacks/sonarqube/extensions:/opt/sonarqube/extensions
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      #- /home/administrator/docker-stacks/sonarqube/extensions:/opt/sonarqube/extensions
       - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins    
     ports:
-      - "9000:9000"
-      - "9092:9092"
+      - 9000:9000
+      - 9092:9092
     depends_on:
       - db
+
+  teamcity_server:
+    # More details can be found here https://hub.docker.com/r/jetbrains/teamcity-server/
+    image: jetbrains/teamcity-server:latest
+    volumes:
+      - teamcity_data:/data/teamcity_server/datadir
+      - teamcity_logs:/opt/teamcity/logs
+    ports:
+      - 8111:8111
+    depends_on:
+      - db    
 
   

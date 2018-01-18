@@ -7,6 +7,11 @@
 
 **NOTE:** **SonarQube** uses the following default credentials: `admin / admin`
 
+The following command is used to start whole setup:
+```
+docker-compose -f docker-compose.yml -f docker-compose.override.yml config
+```
+
 # Creation of Roslyn-based plugins for Sonar
 
 1. Update `docker-compose.yml` as follows: 
@@ -35,9 +40,15 @@ these changes required to discover pluging which are going to be created later.
 Example of analysis execution commands:
 
 ```
-SonarQube.Scanner.MSBuild.exe begin /k:"Intelliflo.PFP" /v:"1.0" /d:sonar.host.url="http://192.168.8.119:9000" /d:sonar.login="eb71436c5a7bef8a4237c827ac1f9d2a159f42e2" /d:sonar.exclusions="**/*.js,**/*.css"
+SonarQube.Scanner.MSBuild.exe begin /k:"Intelliflo.PFP" /v:"1.0" /d:sonar.host.url="http://192.168.8.119:9000" /d:sonar.login="eb71436c5a7bef8a4237c827ac1f9d2a159f42e2" /d:sonar.exclusions="**/*.js,**/*.css,**/*.html,**/*.htm"
 
 "c:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe" Intelliflo.PersonalFinancePortal.sln /t:Rebuild
 
 SonarQube.Scanner.MSBuild.exe end /d:sonar.login="eb71436c5a7bef8a4237c827ac1f9d2a159f42e2"
 ```
+
+# Team City configuration
+The following steps must be performed to configure TeamCity
+1. Create MS SQL Database using `Latin1_General_100_CI_AS` collation
+2. Add JDBC driver for MS Server. It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=55539).
+3. Unpack content to folder specified in Team City configuration screen.
