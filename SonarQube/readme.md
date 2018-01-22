@@ -51,4 +51,13 @@ SonarQube.Scanner.MSBuild.exe end /d:sonar.login="eb71436c5a7bef8a4237c827ac1f9d
 The following steps must be performed to configure TeamCity
 1. Create MS SQL Database using `Latin1_General_100_CI_AS` collation
 2. Add JDBC driver for MS Server. It can be downloaded [here](https://www.microsoft.com/en-us/download/details.aspx?id=55539).
-3. Unpack content to folder specified in Team City configuration screen.
+3. Copy content of driver to container. Use command similar to this:
+```
+docker container cp d:\_Downloads\sqljdbc_6.2\enu\. 90471ebcddd4:/data/teamcity_server/datadir/lib/jdbc
+```
+You can verify correctness of operation using the following command
+```
+docker container exec 90471ebcddd4 ls /data/teamcity_server/datadir/lib/jdbc
+```
+4. Refresh Team City page, follow instructions
+5. Define password `admin:admin`
