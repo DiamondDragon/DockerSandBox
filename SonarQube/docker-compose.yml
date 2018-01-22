@@ -23,7 +23,8 @@ services:
       - mssql-server-linux-data:/var/opt/mssql
     ports:
       - 1477:1433
-
+    restart: always
+    
   sonarqube:
     # More details can be found here: https://hub.docker.com/_/sonarqube/
     image: sonarqube:latest
@@ -41,6 +42,7 @@ services:
       - 9092:9092
     depends_on:
       - db
+    restart: always
 
   teamcity_server:
     # More details can be found here https://hub.docker.com/r/jetbrains/teamcity-server/
@@ -52,5 +54,5 @@ services:
       - 8111:8111
     depends_on:
       - db    
-
+    restart: always
   

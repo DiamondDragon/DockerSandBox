@@ -4,15 +4,15 @@ version: '3'
 services:
   db:
     # More details https://docs.docker.com/compose/compose-file/#restart
-    restart: always
     environment:
       - SA_PASSWORD=TestApp123456
 
   sonarqube:
-    restart: always
     environment:
       - SONARQUBE_JDBC_USERNAME=sa
       - SONARQUBE_JDBC_PASSWORD=TestApp123456
+
+
 
       
   
