@@ -61,3 +61,13 @@ docker container exec 90471ebcddd4 ls /data/teamcity_server/datadir/lib/jdbc
 ```
 4. Refresh Team City page, follow instructions
 5. Define password `admin:admin`
+
+# Linux Commands
+1. Connect to host using SSH
+```
+ssh <IP adress> -l <userName>
+```
+2. Copy files over SSH
+```
+scp /d/Projects/DockerSandBox/SonarQube/docker-compose.yml administrator@192.168.8.119:~/docker-stacks/sonarqube/docker-compose.yml
+```
