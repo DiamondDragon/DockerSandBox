@@ -1,0 +1,27 @@
+version: '3'
+
+volumes:
+  tc_agent_config:
+
+services:
+  tc_agent:
+    # Windows image is expected to contain the following important components
+    # - .NET Framework 4.7.1 (or latest version)
+    # - dotNet core 2.1+ (or latest version)
+    # - NuGet
+    # - MsBuild 15
+    # The following links contains references to proper images:
+    # https://github.com/JetBrains/teamcity-docker-minimal-agent/blob/master/windowsservercore/Dockerfile
+    # https://github.com/JetBrains/teamcity-docker-agent/blob/master/windowsservercore/Dockerfile
+    # https://github.com/Microsoft/dotnet-framework-docker/blob/master/4.7.1-windowsservercore-1709/build/Dockerfile
+    image: jetbrains/teamcity-agent:latest-windowsservercore
+    environment:
+      - SERVER_URL=http://192.168.8.119:8111
+    volumes:
+      - tc_agent_config:C:/BuildAgent/conf
+    restart: always
+
+networks:
+  default:
+    external:
+      name: nat
