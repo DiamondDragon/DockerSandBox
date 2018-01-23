@@ -17,6 +17,7 @@ services:
     image: jetbrains/teamcity-agent:latest-windowsservercore
     environment:
       - SERVER_URL=http://192.168.8.119:8111
+      - AGENT_NAME=VM-Dot-Net-Innovations
     volumes:
       - tc_agent_config:C:/BuildAgent/conf
     restart: always
