@@ -14,7 +14,7 @@ services:
     # https://github.com/JetBrains/teamcity-docker-minimal-agent/blob/master/windowsservercore/Dockerfile
     # https://github.com/JetBrains/teamcity-docker-agent/blob/master/windowsservercore/Dockerfile
     # https://github.com/Microsoft/dotnet-framework-docker/blob/master/4.7.1-windowsservercore-1709/build/Dockerfile
-    image: jetbrains/teamcity-agent:latest-windowsservercore
+    image: jetbrains/teamcity-agent:latest-windowsservercore-1709
     environment:
       - SERVER_URL=http://192.168.8.119:8111
       - AGENT_NAME=VM-Dot-Net-Innovations
