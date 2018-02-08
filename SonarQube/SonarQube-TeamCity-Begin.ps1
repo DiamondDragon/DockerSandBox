@@ -1,9 +1,9 @@
-$sonarQubeRunnerFolder = 'd:\sonar-qube-runner-test'
+$sonarQubeRunnerFolder = '%sonarqube.runnerpath%'
 
-$sonarQubeToken = 'eb71436c5a7bef8a4237c827ac1f9d2a159f42e2'
-$sonarQubeBuildNumber = '1.0'
-$sonarQubeProjectKey = 'Intelliflo.PFP'
-$sonarQubeServerUrl ='http://192.168.8.119:9000'
+$sonarQubeToken = '%sonarqube.token%'
+$sonarQubeBuildNumber = '%teamcity.build.id%'
+$sonarQubeProjectKey = '%sonarqube.projectkey%'
+$sonarQubeServerUrl ='%sonarqube.url%'
 $sonarQubeFilesToExclude = '**/*.js,**/*.css,**/*.html,**/*.htm'
 
 if (!(Test-Path -Path $sonarQubeRunnerFolder)) {
@@ -30,5 +30,7 @@ if (!(Test-Path -Path $sonarQubeRunnerFolder)) {
 Write-Output "Loading SonarQube rules..."
 $sonarQubeScannerPath = "$sonarQubeRunnerFolder\SonarQube.Scanner.MSBuild.exe"
 Write-Output "SonarQube Scanner Path: $sonarQubeScannerPath"
-Start-Process -FilePath $sonarQubeScannerPath -ArgumentList "begin /k:`"$sonarQubeProjectKey`" /v:`"$sonarQubeBuildNumber`" /d:sonar.host.url=`"$sonarQubeServerUrl`" /d:sonar.login=`"$sonarQubeToken`" /d:sonar.exclusions=`"$sonarQubeFilesToExclude`""
+$argumentList= "begin /k:`"$sonarQubeProjectKey`" /v:`"$sonarQubeBuildNumber`" /d:sonar.host.url=`"$sonarQubeServerUrl`" /d:sonar.login=`"$sonarQubeToken`" /d:sonar.exclusions=`"$sonarQubeFilesToExclude`""
+Write-Output "SonarQube Arguments: $argumentList"
+Invoke-Expression -Command "$sonarQubeScannerPath $argumentList"
 Write-Output "Done..."
