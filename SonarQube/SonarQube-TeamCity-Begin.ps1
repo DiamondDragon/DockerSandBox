@@ -30,7 +30,7 @@ if (!(Test-Path -Path $sonarQubeRunnerFolder)) {
 Write-Output "Loading SonarQube rules..."
 $sonarQubeScannerPath = "$sonarQubeRunnerFolder\SonarQube.Scanner.MSBuild.exe"
 Write-Output "SonarQube Scanner Path: $sonarQubeScannerPath"
-$argumentList= "begin /k:`"$sonarQubeProjectKey`" /v:`"$sonarQubeBuildNumber`" /d:sonar.host.url=`"$sonarQubeServerUrl`" /d:sonar.login=`"$sonarQubeToken`" /d:sonar.exclusions=`"$sonarQubeFilesToExclude`""
+$argumentList= "begin /k:`"$sonarQubeProjectKey`" /v:`"$sonarQubeBuildNumber`" /d:sonar.host.url=`"$sonarQubeServerUrl`" /d:sonar.login=`"$sonarQubeToken`" /d:sonar.exclusions=`"$sonarQubeFilesToExclude`" /d:sonar.cs.dotcover.reportsPaths=`"%sonarqube.dotCoverHtmlReport%`""
 Write-Output "SonarQube Arguments: $argumentList"
 Invoke-Expression -Command "$sonarQubeScannerPath $argumentList"
 Write-Output "Done..."
