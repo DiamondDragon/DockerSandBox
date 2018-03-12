@@ -7,7 +7,7 @@ volumes:
   sonarqube_conf:
   sonarqube_data:
   sonarqube_extensions:
-  sonarqube_bundled-plugins:  
+  sonarqube_bundled_plugins:  
   teamcity_data:
   teamcity_logs:
 
@@ -27,7 +27,7 @@ services:
     
   sonarqube:
     # More details can be found here: https://hub.docker.com/_/sonarqube/
-    image: sonarqube:latest
+    image: sonarqube
     environment:
       # Connection string details https://docs.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url
       - SONARQUBE_JDBC_URL=jdbc:sqlserver://db:1433;databaseName=SonarQubeDb;    
@@ -35,8 +35,7 @@ services:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
-      #- /home/administrator/docker-stacks/sonarqube/extensions:/opt/sonarqube/extensions
-      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins    
+      - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugins    
     ports:
       - 9000:9000
       - 9092:9092
